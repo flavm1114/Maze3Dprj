@@ -9,5 +9,15 @@ namespace JJMaze3Dprj
     class Wall
     {
         private bool isExist = true;
+
+        public bool GetIsExist()
+        {
+            return isExist;
+        }
+
+        public void SetIsExist(bool ex)
+        {
+            isExist = ex;
+        }
     }
 }

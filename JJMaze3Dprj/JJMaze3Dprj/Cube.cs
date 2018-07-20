@@ -10,11 +10,9 @@ namespace JJMaze3Dprj
     {
         private Maze3D _maze3d;
 
-        private int _x_MazeSize;
-        private int _y_MazeSize;
-
         private int _x_index;
         private int _y_index;
+        private int _z_index;
 
         private Cube top_nearby_cube;
         private Cube bottom_nearby_cube;
@@ -30,15 +28,19 @@ namespace JJMaze3Dprj
         private Wall front_wall;
         private Wall back_wall;
 
-        public Cube(Maze3D maze3d, int xindex, int yindex, int xMazeSize,int yMazeSize)
+        public Cube(Maze3D maze3d, int xIndex, int yIndex, int zIndex)
         {
             _maze3d = maze3d;
 
-            _x_index = xindex;
-            _y_index = yindex;
-            _x_MazeSize = xMazeSize;
-            _y_MazeSize = yMazeSize;
+            _x_index = xIndex;
+            _y_index = yIndex;
+            _z_index = zIndex;
 
+            InitializeCube();
+        }
+
+        private void InitializeCube()
+        {
             top_nearby_cube = null;
             bottom_nearby_cube = null;
             left_nearby_cube = null;
@@ -52,13 +54,8 @@ namespace JJMaze3Dprj
             right_wall = new Wall();
             front_wall = new Wall();
             back_wall = new Wall();
-
-            InitializeNearByCube();
         }
 
-        private void InitializeNearByCube()
-        {
 
-        }
     }
 }
