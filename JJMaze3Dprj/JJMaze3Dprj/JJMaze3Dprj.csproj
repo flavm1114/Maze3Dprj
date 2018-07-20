@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cube.cs" />
-    <Compile Include="Maze3D.cs" />
+    <Compile Include="Cell.cs" />
+    <Compile Include="Maze.cs" />
     <Compile Include="MazeCreator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

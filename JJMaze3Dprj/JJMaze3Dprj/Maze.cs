@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace JJMaze3Dprj
 {
-    public class Maze3D
+    public class Maze
     {
-        private Cube[,,] _cube;
+        private Cell[,,] _cube;
         private int _xSize;
         private int _ySize;
         private int _zSize;
 
-        public Maze3D(int xyzSize)
+        public Maze(int xyzSize)
         {
             if (xyzSize != 0)
             {
-                _cube = new Cube[xyzSize, xyzSize, xyzSize];
+                _cube = new Cell[xyzSize, xyzSize, xyzSize];
 
                 for (int i = 0; i < xyzSize; i++)
                 {
@@ -25,7 +25,7 @@ namespace JJMaze3Dprj
                     {
                         for (int k = 0; k < xyzSize; k++)
                         {
-                            _cube[i, j, k] = new Cube(this, i, j, k);
+                            _cube[i, j, k] = new Cell(this, i, j, k);
                         }
                     }
                 }
@@ -36,11 +36,11 @@ namespace JJMaze3Dprj
             }
         }
 
-        public Maze3D(int xSize, int ySize, int zSize)
+        public Maze(int xSize, int ySize, int zSize)
         {
             if (xSize != 0 && ySize != 0 && zSize != 0)
             {
-                _cube = new Cube[xSize, ySize, zSize];
+                _cube = new Cell[xSize, ySize, zSize];
 
                 for (int i = 0; i < xSize; i++)
                 {
@@ -48,7 +48,7 @@ namespace JJMaze3Dprj
                     {
                         for (int k = 0; k < zSize; k++)
                         {
-                            _cube[i, j, k] = new Cube(this, i, j, k);
+                            _cube[i, j, k] = new Cell(this, i, j, k);
                         }
                     }
                 }
@@ -59,6 +59,24 @@ namespace JJMaze3Dprj
             }
         }
 
-        
+        public int Get_xSize()
+        {
+            return _xSize;
+        }
+
+        public int Get_ySize()
+        {
+            return _ySize;
+        }
+
+        public int Get_zSize()
+        {
+            return _zSize;
+        }
+
+        public Cell Get_cube(int x, int y, int z)
+        {
+            return _cube[x,y,z];
+        }
     }
 }

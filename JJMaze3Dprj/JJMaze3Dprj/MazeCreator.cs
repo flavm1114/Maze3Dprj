@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JJMaze3Dprj
 {
-    enum Direction
+    public enum Direction
     {
         TOP, BOTTOM,
         LEFT, RIGHT,
@@ -14,26 +14,65 @@ namespace JJMaze3Dprj
     };
 
     public class MazeCreator
-    {
-        private Maze3D _maze;
+    { 
+        private Maze _maze;
+
+        private List<Wall> _wallList;
+
+        public MazeCreator()
+        {
+            _wallList = new List<Wall>();
+        }
 
         void CreateMaze(int sizeX, int sizeY, int sizeZ)
         {
-            _maze = new Maze3D(sizeX, sizeY, sizeZ);
+            //미로 생성 및 초기화
+            _maze = new Maze(sizeX, sizeY, sizeZ);
+            InitializeMaze();
 
+            //미로생성 알고리즘 실행
             RunMazeCreateAlgorithm_vPrim();
         }
 
         void CreateMaze(int sizeXYZ)
         {
-            _maze = new Maze3D(sizeXYZ, sizeXYZ, sizeXYZ);
-
+            //미로 생성 및 초기화
+            _maze = new Maze(sizeXYZ, sizeXYZ, sizeXYZ);
+            InitializeMaze();
+            
+            //미로생성 알고리즘 실행
             RunMazeCreateAlgorithm_vPrim();
+        }
+
+        void InitializeMaze()
+        {
+            for(int i = 0; i < _maze.Get_xSize(); i++)
+            {
+                
+            }
         }
 
         void RunMazeCreateAlgorithm_vPrim()
         {
-            
+            // 1.셀을 하나 고른다 ( 0,0,0 으로 고르자 )
+            Cell selectedCell = _maze.Get_cube(0, 0, 0);
+
+            // 고른 셀을 마킹한다 ( 미로의 부분이 되었다 )
+            selectedCell.SetIsVisited(true);
+
+            // 그 셀의 벽을 벽리스트에 추가하라
+
+
+            // 2. 벽들이 리스트에 있는동안 반복
+
+            // 2-1 벽 리스트중에 벽을 하나 골라라 (벽 리스트는 현재까지 완성된미로의 외곽선을 의미함)
+
+            // 만약 고른 벽이 나누는 두 셀중 오직 하나만 방문 됐다면
+            // 벽을 통과 가능하게 만들고 그 방문되지 않은 셀을 미로의 부분으로 만들어라
+
+            // 그 셀의 벽을 벽리스트에 추가하라
+
+            // 2-2 그 벽을 리스트로부터 지워라
         }
     }
 }
