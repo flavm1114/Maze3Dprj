@@ -16,12 +16,12 @@ namespace JJMaze3Dprj
 
         private bool _isVisited;
 
-        private Cell top_nearby_cube;
-        private Cell bottom_nearby_cube;
-        private Cell left_nearby_cube;
-        private Cell right_nearby_cube;
-        private Cell front_nearby_cube;
-        private Cell back_nearby_cube;
+        private Cell top_nearby_cell;
+        private Cell bottom_nearby_cell;
+        private Cell left_nearby_cell;
+        private Cell right_nearby_cell;
+        private Cell front_nearby_cell;
+        private Cell back_nearby_cell;
 
         private Wall top_wall;
         private Wall bottom_wall;
@@ -45,19 +45,19 @@ namespace JJMaze3Dprj
         {
             _isVisited = false;
 
-            top_nearby_cube = null;
-            bottom_nearby_cube = null;
-            left_nearby_cube = null;
-            right_nearby_cube = null;
-            front_nearby_cube = null;
-            back_nearby_cube = null;
+            top_nearby_cell = null;
+            bottom_nearby_cell = null;
+            left_nearby_cell = null;
+            right_nearby_cell = null;
+            front_nearby_cell = null;
+            back_nearby_cell = null;
 
-            top_wall = new Wall();
-            bottom_wall = new Wall();
-            left_wall = new Wall();
-            right_wall = new Wall();
-            front_wall = new Wall();
-            back_wall = new Wall();
+            top_wall = null;
+            bottom_wall = null;
+            left_wall = null;
+            right_wall = null;
+            front_wall = null;
+            back_wall = null;
         }
 
         public int GetXindex()
@@ -90,17 +90,17 @@ namespace JJMaze3Dprj
             switch(direction)
             {
                 case Direction.TOP:
-                    return top_nearby_cube; break;
+                    return top_nearby_cell;
                 case Direction.BOTTOM:
-                    return bottom_nearby_cube; break;
+                    return bottom_nearby_cell;
                 case Direction.LEFT:
-                    return left_nearby_cube; break;
+                    return left_nearby_cell;
                 case Direction.RIGHT:
-                    return right_nearby_cube; break;
+                    return right_nearby_cell;
                 case Direction.FRONT:
-                    return front_nearby_cube; break;
+                    return front_nearby_cell;
                 case Direction.BACK:
-                    return back_nearby_cube; break;
+                    return back_nearby_cell;
             }
             return null;
         }
@@ -110,17 +110,17 @@ namespace JJMaze3Dprj
             switch (direction)
             {
                 case Direction.TOP:
-                    top_nearby_cube = nearByCell; break;
+                    top_nearby_cell = nearByCell; break;
                 case Direction.BOTTOM:
-                    bottom_nearby_cube = nearByCell; break;
+                    bottom_nearby_cell = nearByCell; break;
                 case Direction.LEFT:
-                    left_nearby_cube = nearByCell; break;
+                    left_nearby_cell = nearByCell; break;
                 case Direction.RIGHT:
-                    right_nearby_cube = nearByCell; break;
+                    right_nearby_cell = nearByCell; break;
                 case Direction.FRONT:
-                    front_nearby_cube = nearByCell; break;
+                    front_nearby_cell = nearByCell; break;
                 case Direction.BACK:
-                    back_nearby_cube = nearByCell; break;
+                    back_nearby_cell = nearByCell; break;
             }
         }
 
@@ -129,17 +129,17 @@ namespace JJMaze3Dprj
             switch (direction)
             {
                 case Direction.TOP:
-                    return top_wall; break;
+                    return top_wall;
                 case Direction.BOTTOM:
-                    return bottom_wall; break;
+                    return bottom_wall;
                 case Direction.LEFT:
-                    return left_wall; break;
+                    return left_wall;
                 case Direction.RIGHT:
-                    return right_wall; break;
+                    return right_wall;
                 case Direction.FRONT:
-                    return front_wall; break;
+                    return front_wall;
                 case Direction.BACK:
-                    return back_wall; break;
+                    return back_wall;
             }
             return null;
         }

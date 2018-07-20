@@ -8,7 +8,7 @@ namespace JJMaze3Dprj
 {
     public class Maze
     {
-        private Cell[,,] _cube;
+        private Cell[,,] _cell;
         private int _xSize;
         private int _ySize;
         private int _zSize;
@@ -17,7 +17,7 @@ namespace JJMaze3Dprj
         {
             if (xyzSize != 0)
             {
-                _cube = new Cell[xyzSize, xyzSize, xyzSize];
+                _cell = new Cell[xyzSize, xyzSize, xyzSize];
 
                 for (int i = 0; i < xyzSize; i++)
                 {
@@ -25,7 +25,7 @@ namespace JJMaze3Dprj
                     {
                         for (int k = 0; k < xyzSize; k++)
                         {
-                            _cube[i, j, k] = new Cell(this, i, j, k);
+                            _cell[i, j, k] = new Cell(this, i, j, k);
                         }
                     }
                 }
@@ -40,7 +40,7 @@ namespace JJMaze3Dprj
         {
             if (xSize != 0 && ySize != 0 && zSize != 0)
             {
-                _cube = new Cell[xSize, ySize, zSize];
+                _cell = new Cell[xSize, ySize, zSize];
 
                 for (int i = 0; i < xSize; i++)
                 {
@@ -48,7 +48,7 @@ namespace JJMaze3Dprj
                     {
                         for (int k = 0; k < zSize; k++)
                         {
-                            _cube[i, j, k] = new Cell(this, i, j, k);
+                            _cell[i, j, k] = new Cell(this, i, j, k);
                         }
                     }
                 }
@@ -74,9 +74,9 @@ namespace JJMaze3Dprj
             return _zSize;
         }
 
-        public Cell Get_cube(int x, int y, int z)
+        public Cell Get_cell(int x, int y, int z)
         {
-            return _cube[x,y,z];
+            return _cell[x,y,z];
         }
     }
 }
