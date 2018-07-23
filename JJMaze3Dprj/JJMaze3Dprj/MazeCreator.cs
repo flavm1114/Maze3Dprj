@@ -21,82 +21,135 @@ namespace JJMaze3Dprj
 
         public MazeCreator()
         {
+            _maze = null;
             _wallList = new List<Wall>();
         }
 
         public void CreateMaze(int sizeX, int sizeY, int sizeZ)
         {
-            //미로 생성 및 초기화
-            _maze = new Maze(sizeX, sizeY, sizeZ);
-            InitializeMaze();
+            if (sizeX >= 2 && sizeY >= 2 && sizeZ >= 2)
+            {
+                //미로 생성 및 초기화
+                _maze = new Maze(sizeX, sizeY, sizeZ);
+                InitializeMaze();
 
-            //미로생성 알고리즘 실행
-            RunMazeCreateAlgorithm_vPrim();
+                //미로생성 알고리즘 실행
+                RunMazeCreateAlgorithm_vPrim();
+            }
         }
 
         public void CreateMaze(int sizeXYZ)
         {
-            //미로 생성 및 초기화
-            _maze = new Maze(sizeXYZ, sizeXYZ, sizeXYZ);
-            InitializeMaze();
-            
-            //미로생성 알고리즘 실행
-            RunMazeCreateAlgorithm_vPrim();
+            if (sizeXYZ >= 2)
+            {
+                //미로 생성 및 초기화
+                _maze = new Maze(sizeXYZ, sizeXYZ, sizeXYZ);
+                InitializeMaze();
+
+                //미로생성 알고리즘 실행
+                RunMazeCreateAlgorithm_vPrim();
+            }
         }
 
         private void InitializeMaze()
         {
+            MappingNearByCell();
+
+            MappingWallToCell();
+        }
+
+        private void MappingNearByCell()
+        {
             //축 순서는 3중배열의 인덱스 순서를 따름 i, j, k 및 x, y, z 공통 (세로 가로 높이 순서)
-            for(int i = 0; i < _maze.Get_xSize(); i++)
+            for (int i = 0; i < _maze.Get_xSize(); i++)
             {
-                for(int j = 0; j < _maze.Get_ySize(); j++)
+                for (int j = 0; j < _maze.Get_ySize(); j++)
                 {
                     for (int k = 0; k < _maze.Get_zSize(); k++)
                     {
                         Cell currentCell = _maze.Get_cell(i, j, k);
-                        MappingNearByCell(currentCell);
 
-                        currentCell.SetWall(Direction.TOP, new Wall());
-                        
-                        if(k == 0)
-                        {
-                            currentCell.SetWall(Direction.BOTTOM, new Wall());
-                        }
-                        else
-                        {
-                            currentCell.SetWall(Direction.BOTTOM, _maze.Get_cell(i, j, k - 1).GetWall(Direction.TOP));
-                        }
-                        
+                        if (k != _maze.Get_zSize() - 1)
+                            currentCell.SetNearByCell(Direction.TOP, _maze.Get_cell(i, j, k + 1));
+                        if (k != 0)
+                            currentCell.SetNearByCell(Direction.BOTTOM, _maze.Get_cell(i, j, k - 1));
+                        if (j != 0)
+                            currentCell.SetNearByCell(Direction.LEFT, _maze.Get_cell(i, j - 1, k));
+                        if (j != _maze.Get_ySize() - 1)
+                            currentCell.SetNearByCell(Direction.RIGHT, _maze.Get_cell(i, j + 1, k));
+                        if (i != _maze.Get_xSize() - 1)
+                            currentCell.SetNearByCell(Direction.FRONT, _maze.Get_cell(i + 1, j, k));
+                        if (i != 0)
+                            currentCell.SetNearByCell(Direction.BACK, _maze.Get_cell(i - 1, j, k));
                     }
                 }
             }
-
-        }
-
-        private void MappingNearByCell(Cell currentCell)
-        {
-            //축 순서는 3중배열의 인덱스 순서를 따름 i, j, k 및 x, y, z 공통 (세로 가로 높이 순서)
-            int i = currentCell.GetXindex();
-            int j = currentCell.GetYindex();
-            int k = currentCell.GetZindex();
-
-            if (k != _maze.Get_zSize() - 1)
-                currentCell.SetNearByCell(Direction.TOP, _maze.Get_cell(i, j, k + 1));
-            if (k != 0)
-                currentCell.SetNearByCell(Direction.BOTTOM, _maze.Get_cell(i, j, k - 1));
-            if (j != 0)
-                currentCell.SetNearByCell(Direction.LEFT, _maze.Get_cell(i, j - 1, k));
-            if (j != _maze.Get_ySize() - 1)
-                currentCell.SetNearByCell(Direction.RIGHT, _maze.Get_cell(i, j + 1, k));
-            if (i != _maze.Get_xSize() - 1)
-                currentCell.SetNearByCell(Direction.FRONT, _maze.Get_cell(i + 1, j, k));
-            if (i != 0)
-                currentCell.SetNearByCell(Direction.BACK, _maze.Get_cell(i - 1, j, k));
         }
 
         private void MappingWallToCell()
         {
+            //축 순서는 3중배열의 인덱스 순서를 따름 i, j, k 및 x, y, z 공통 (세로 가로 높이 순서)
+            for (int i = 0; i < _maze.Get_xSize(); i++)
+            {
+                for (int j = 0; j < _maze.Get_ySize(); j++)
+                {
+                    for (int k = 0; k < _maze.Get_zSize(); k++)
+                    {
+                        Cell currentCell = _maze.Get_cell(i, j, k);
 
+
+                        Wall topWall = new Wall();
+                        topWall.Add_dividedCells(currentCell);
+                        if(k != _maze.Get_zSize() - 1)
+                            topWall.Add_dividedCells(currentCell.GetNearByCell(Direction.TOP));
+                        currentCell.SetWall(Direction.TOP, topWall);
+                        if (k == 0)
+                        {
+                            Wall bottomWall = new Wall();
+                            bottomWall.Add_dividedCells(currentCell);
+                            currentCell.SetWall(Direction.BOTTOM, bottomWall);
+                        }
+                        else
+                        {
+                            currentCell.SetWall(Direction.BOTTOM, currentCell.GetNearByCell(Direction.BOTTOM).GetWall(Direction.TOP));
+                        }
+
+
+                        Wall rightWall = new Wall();
+                        rightWall.Add_dividedCells(currentCell);
+                        if(j != _maze.Get_ySize() - 1)
+                            rightWall.Add_dividedCells(currentCell.GetNearByCell(Direction.RIGHT));
+                        currentCell.SetWall(Direction.RIGHT, rightWall);
+                        if (j == 0)
+                        {
+                            Wall leftWall = new Wall();
+                            leftWall.Add_dividedCells(currentCell);
+                            currentCell.SetWall(Direction.LEFT, leftWall);
+                        }
+                        else
+                        {
+                            currentCell.SetWall(Direction.LEFT, currentCell.GetNearByCell(Direction.LEFT).GetWall(Direction.RIGHT));
+                        }
+
+
+                        Wall frontWall = new Wall();
+                        frontWall.Add_dividedCells(currentCell);
+                        if (i != _maze.Get_xSize() - 1)
+                            frontWall.Add_dividedCells(currentCell.GetNearByCell(Direction.FRONT));
+                        currentCell.SetWall(Direction.FRONT, frontWall);
+                        if (i == 0)
+                        {
+                            Wall backWall = new Wall();
+                            backWall.Add_dividedCells(currentCell);
+                            currentCell.SetWall(Direction.BACK, backWall);
+                        }
+                        else
+                        {
+                            currentCell.SetWall(Direction.BACK, currentCell.GetNearByCell(Direction.BACK).GetWall(Direction.FRONT));
+                        }
+                    }
+                }
+            }
         }
 
         private void RunMazeCreateAlgorithm_vPrim()
@@ -108,18 +161,27 @@ namespace JJMaze3Dprj
             selectedCell.SetIsVisited(true);
 
             // 그 셀의 벽을 벽리스트에 추가하라
-
+            Direction direction;
+            for (direction = Direction.TOP; direction <= Direction.BACK; direction++)
+            {
+                _wallList.Add(selectedCell.GetWall(direction));
+            }
 
             // 2. 벽들이 리스트에 있는동안 반복
+            while ( _wallList.Count > 0)
+            {
+                // 2-1 벽 리스트중에 벽을 하나 골라라 (벽 리스트는 현재까지 완성된미로의 외곽선을 의미함)
+                Random random = new Random();
+                Wall selectedWall = _wallList[random.Next(0,_wallList.Count)];
 
-            // 2-1 벽 리스트중에 벽을 하나 골라라 (벽 리스트는 현재까지 완성된미로의 외곽선을 의미함)
+                // 만약 고른 벽이 나누는 두 셀중 오직 하나만 방문 됐다면
+                if (selectedWall)
+                // 벽을 통과 가능하게 만들고 그 방문되지 않은 셀을 미로의 부분으로 만들어라
 
-            // 만약 고른 벽이 나누는 두 셀중 오직 하나만 방문 됐다면
-            // 벽을 통과 가능하게 만들고 그 방문되지 않은 셀을 미로의 부분으로 만들어라
+                // 그 셀의 벽을 벽리스트에 추가하라
 
-            // 그 셀의 벽을 벽리스트에 추가하라
-
-            // 2-2 그 벽을 리스트로부터 지워라
+                // 2-2 그 벽을 리스트로부터 지워라
+            }
         }
     }
 }

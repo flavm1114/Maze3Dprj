@@ -29,5 +29,27 @@ namespace JJMaze3Dprj
         {
             _isExist = isExist;
         }
+
+        public bool Add_dividedCells(Cell dividedcell)
+        {
+            if (_dividedCells.Count <= 2)
+            {
+                _dividedCells.Add(dividedcell);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public Cell GetDividedCell(int index)
+        {
+            if (_dividedCells.Count > 2)
+                throw new Exception();
+
+            if (index >= 2)
+                throw new Exception();
+
+            if ()
+        }
     }
 }

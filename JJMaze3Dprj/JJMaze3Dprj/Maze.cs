@@ -15,48 +15,42 @@ namespace JJMaze3Dprj
 
         public Maze(int xyzSize)
         {
-            if (xyzSize != 0)
-            {
-                _cell = new Cell[xyzSize, xyzSize, xyzSize];
+            _cell = new Cell[xyzSize, xyzSize, xyzSize];
 
-                for (int i = 0; i < xyzSize; i++)
+            for (int i = 0; i < xyzSize; i++)
+            {
+                for (int j = 0; j < xyzSize; j++)
                 {
-                    for (int j = 0; j < xyzSize; j++)
+                    for (int k = 0; k < xyzSize; k++)
                     {
-                        for (int k = 0; k < xyzSize; k++)
-                        {
-                            _cell[i, j, k] = new Cell(this, i, j, k);
-                        }
+                        _cell[i, j, k] = new Cell(this, i, j, k);
                     }
                 }
-
-                _xSize = xyzSize;
-                _ySize = xyzSize;
-                _zSize = xyzSize;
             }
+
+            _xSize = xyzSize;
+            _ySize = xyzSize;
+            _zSize = xyzSize;
         }
 
         public Maze(int xSize, int ySize, int zSize)
         {
-            if (xSize != 0 && ySize != 0 && zSize != 0)
-            {
-                _cell = new Cell[xSize, ySize, zSize];
+            _cell = new Cell[xSize, ySize, zSize];
 
-                for (int i = 0; i < xSize; i++)
+            for (int i = 0; i < xSize; i++)
+            {
+                for (int j = 0; j < ySize; j++)
                 {
-                    for (int j = 0; j < ySize; j++)
+                    for (int k = 0; k < zSize; k++)
                     {
-                        for (int k = 0; k < zSize; k++)
-                        {
-                            _cell[i, j, k] = new Cell(this, i, j, k);
-                        }
+                        _cell[i, j, k] = new Cell(this, i, j, k);
                     }
                 }
-
-                _xSize = xSize;
-                _ySize = ySize;
-                _zSize = zSize;
             }
+
+            _xSize = xSize;
+            _ySize = ySize;
+            _zSize = zSize;   
         }
 
         public int Get_xSize()

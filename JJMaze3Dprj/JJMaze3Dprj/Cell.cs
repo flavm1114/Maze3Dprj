@@ -38,11 +38,6 @@ namespace JJMaze3Dprj
             _y_index = yIndex;
             _z_index = zIndex;
 
-            InitializeCube();
-        }
-
-        private void InitializeCube()
-        {
             _isVisited = false;
 
             top_nearby_cell = null;

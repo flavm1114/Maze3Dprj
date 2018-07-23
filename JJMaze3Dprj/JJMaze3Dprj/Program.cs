@@ -10,6 +10,9 @@ namespace JJMaze3Dprj
     {
         static void Main(string[] args)
         {
+            MazeCreator jjMaze = new MazeCreator();
+
+            jjMaze.CreateMaze(10);
         }
     }
 }
