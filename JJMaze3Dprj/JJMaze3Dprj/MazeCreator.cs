@@ -207,7 +207,7 @@ namespace JJMaze3Dprj
                         AddWallsToWallList(unVisitedCell);
                     }
                 }
-                // 2-2 그 벽을 리스트로부터 지워라
+                // 2-2 그 벽을 리스트로부터 지워라 //
                 _wallList.Remove(selectedWall);
             }
         }
