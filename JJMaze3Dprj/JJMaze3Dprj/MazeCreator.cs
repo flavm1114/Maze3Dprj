@@ -161,11 +161,7 @@ namespace JJMaze3Dprj
             selectedCell.SetIsVisited(true);
 
             // 그 셀의 벽을 벽리스트에 추가하라
-            Direction direction;
-            for (direction = Direction.TOP; direction <= Direction.BACK; direction++)
-            {
-                _wallList.Add(selectedCell.GetWall(direction));
-            }
+            AddWallsToWallList(selectedCell);
 
             // 2. 벽들이 리스트에 있는동안 반복
             while ( _wallList.Count > 0)
@@ -175,12 +171,53 @@ namespace JJMaze3Dprj
                 Wall selectedWall = _wallList[random.Next(0,_wallList.Count)];
 
                 // 만약 고른 벽이 나누는 두 셀중 오직 하나만 방문 됐다면
-                if (selectedWall)
-                // 벽을 통과 가능하게 만들고 그 방문되지 않은 셀을 미로의 부분으로 만들어라
+                Cell[]twoCell = new Cell[2];
+                twoCell[0] = selectedWall.GetDividedCell(0);
+                twoCell[1] = selectedWall.GetDividedCell(1);
+                if (twoCell[0] == null && twoCell[1] == null)
+                    throw new Exception();
 
-                // 그 셀의 벽을 벽리스트에 추가하라
+                if (twoCell[0] != null && twoCell[1] != null)
+                {
+                    Cell unVisitedCell = null;
+                    int twoCellvisitcount = 0;
+                    for(int i = 0; i < 2; i++)
+                    {
+                        if(twoCell[i].GetIsVisited() == true)
+                        {
+                            twoCellvisitcount++;
+                        }
+                        else
+                        {
+                            unVisitedCell = twoCell[i];
+                        }
+                    }
 
+                    if (twoCell[0].GetIsVisited() == true) twoCellvisitcount++;
+                    if (twoCell[1].GetIsVisited() == true) twoCellvisitcount++;
+                    // 만약 고른 벽이 나누는 두 셀중 오직 하나만 방문 됐다면
+                    if (twoCellvisitcount == 1)
+                    {
+                        // 벽을 통과 가능하게 만들고 그 방문되지 않은 셀을 미로의 부분으로 만들어라
+                        selectedWall.SetIsExist(false);
+
+                        unVisitedCell.SetIsVisited(false);
+
+                        // 그 셀의 벽을 벽리스트에 추가하라
+                        AddWallsToWallList(unVisitedCell);
+                    }
+                }
                 // 2-2 그 벽을 리스트로부터 지워라
+                _wallList.Remove(selectedWall);
+            }
+        }
+
+        private void AddWallsToWallList(Cell nextCell)
+        {
+            Direction direction;
+            for (direction = Direction.TOP; direction <= Direction.BACK; direction++)
+            {
+                _wallList.Add(nextCell.GetWall(direction));
             }
         }
     }

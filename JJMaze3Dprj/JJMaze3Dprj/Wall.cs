@@ -43,13 +43,21 @@ namespace JJMaze3Dprj
 
         public Cell GetDividedCell(int index)
         {
-            if (_dividedCells.Count > 2)
+            if (_dividedCells.Count > 2 || _dividedCells.Count <= 0)
                 throw new Exception();
 
-            if (index >= 2)
+            if (index >= 2 || index < 0)
                 throw new Exception();
 
-            if ()
+            if (index == 0)
+                return _dividedCells[0];
+            else
+            {
+                if (_dividedCells.Count == 1)
+                    return null;
+                else
+                    return _dividedCells[1];
+            }
         }
     }
 }
