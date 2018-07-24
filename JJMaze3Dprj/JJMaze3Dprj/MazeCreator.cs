@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,22 +20,30 @@ namespace JJMaze3Dprj
 
         private List<Wall> _wallList;
 
+        private Stopwatch stopwatch;
+
         public MazeCreator()
         {
             _maze = null;
             _wallList = new List<Wall>();
+            stopwatch = new Stopwatch();
         }
 
         public void CreateMaze(int sizeX, int sizeY, int sizeZ)
         {
             if (sizeX >= 2 && sizeY >= 2 && sizeZ >= 2)
             {
+                stopwatch.Reset();
+                stopwatch.Start();
+
                 //미로 생성 및 초기화
                 _maze = new Maze(sizeX, sizeY, sizeZ);
                 InitializeMaze();
 
                 //미로생성 알고리즘 실행
                 RunMazeCreateAlgorithm_vPrim();
+
+                stopwatch.Stop();
             }
         }
 
@@ -42,13 +51,23 @@ namespace JJMaze3Dprj
         {
             if (sizeXYZ >= 2)
             {
+                stopwatch.Reset();
+                stopwatch.Start();
+
                 //미로 생성 및 초기화
                 _maze = new Maze(sizeXYZ, sizeXYZ, sizeXYZ);
                 InitializeMaze();
 
                 //미로생성 알고리즘 실행
                 RunMazeCreateAlgorithm_vPrim();
+
+                stopwatch.Stop();
             }
+        }
+
+        public long GetMazeCreatingTimeMilliSeconds()
+        {
+            return stopwatch.ElapsedMilliseconds;
         }
 
         private void InitializeMaze()
@@ -193,15 +212,12 @@ namespace JJMaze3Dprj
                         }
                     }
 
-                    if (twoCell[0].GetIsVisited() == true) twoCellvisitcount++;
-                    if (twoCell[1].GetIsVisited() == true) twoCellvisitcount++;
                     // 만약 고른 벽이 나누는 두 셀중 오직 하나만 방문 됐다면
                     if (twoCellvisitcount == 1)
                     {
                         // 벽을 통과 가능하게 만들고 그 방문되지 않은 셀을 미로의 부분으로 만들어라
                         selectedWall.SetIsExist(false);
-
-                        unVisitedCell.SetIsVisited(false);
+                        unVisitedCell.SetIsVisited(true);
 
                         // 그 셀의 벽을 벽리스트에 추가하라
                         AddWallsToWallList(unVisitedCell);
