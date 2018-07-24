@@ -185,6 +185,7 @@ namespace JJMaze3Dprj
             // 2. 벽들이 리스트에 있는동안 반복
             while ( _wallList.Count > 0)
             {
+                Console.WriteLine(_wallList.Count);
                 // 2-1 벽 리스트중에 벽을 하나 골라라 (벽 리스트는 현재까지 완성된미로의 외곽선을 의미함)
                 Random random = new Random();
                 Wall selectedWall = _wallList[random.Next(0,_wallList.Count)];
@@ -233,7 +234,10 @@ namespace JJMaze3Dprj
             Direction direction;
             for (direction = Direction.TOP; direction <= Direction.BACK; direction++)
             {
-                _wallList.Add(nextCell.GetWall(direction));
+                if (nextCell.GetWall(direction).GetIsExist() == true)
+                {
+                    _wallList.Add(nextCell.GetWall(direction));
+                }
             }
         }
     }

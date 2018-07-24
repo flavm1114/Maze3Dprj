@@ -12,7 +12,7 @@ namespace JJMaze3Dprj
         {
             MazeCreator jjMaze = new MazeCreator();
 
-            jjMaze.CreateMaze(100,100,3);
+            jjMaze.CreateMaze(50,50,50);
 
             Console.WriteLine(jjMaze.GetMazeCreatingTimeMilliSeconds() / 1000.0F);
         }
