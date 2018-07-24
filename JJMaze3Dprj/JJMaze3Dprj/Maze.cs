@@ -59,7 +59,7 @@ namespace JJMaze3Dprj
         }
 
         public int Get_ySize()
-        {
+        { 
             return _ySize;
         }
 
